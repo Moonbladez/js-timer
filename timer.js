@@ -19,7 +19,7 @@ class Timer {
     start = () => {
         //optional onStart callback
         if (this.onStart) {
-            this.onStart();
+            this.onStart(this.timeRemaining);
         }
         //run tick automatically first once so it doesnt have to wait for first interval
         this.tick();
@@ -46,7 +46,7 @@ class Timer {
             this.timeRemaining = timeRemaining - 0.05;
             //if provided callback, call it.
             if (this.onTick) {
-                this.onTick();
+                this.onTick(this.timeRemaining);
             }
         }
     };
@@ -57,6 +57,6 @@ class Timer {
 
     //setter to change the value of the input
     set timeRemaining(time) {
-        this.durationInput.value = time;
+        this.durationInput.value = time.toFixed(2);
     }
 }

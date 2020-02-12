@@ -7,16 +7,17 @@ const circle = document.querySelector("circle")
 const perimeter = circle.getAttribute("r") * 2 * Math.PI;
 circle.setAttribute("stroke-dasharray", perimeter);
 
-let currentOffset = 0;
+let duration;
 
 //timer class. optinal CB functions. Hook up timer to "outside world" to react when certain things have finished
 const timer = new Timer(durationInput, startButton, pauseButton, {
-    onStart() {
-        console.log("timer started");
+    onStart(totalDuration) {
+        duration = totalDuration;
     },
-    onTick() {
-        circle.setAttribute("stroke-dashoffset", currentOffset)
-        currentOffset = currentOffset - 1;
+    onTick(timeRemaining) {
+        circle.setAttribute("stroke-dashoffset",
+            (perimeter * timeRemaining) / duration - perimeter
+        );
     },
     onComplete() {
         console.log("timer completed");
